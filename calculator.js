@@ -2,23 +2,37 @@ var output = document.querySelector(".output");
 var hist = document.querySelector(".history");
 var numb = document.querySelectorAll(".buttons button");
 var val1,val2,op;
-
+output.innerHTML = "";
+hist.innerHTML = "";
 
 for(var i=0;i<numb.length;i++){
 numb[i].addEventListener("click", function(){
-            if(this.className==="number")
-            output.innerText = output.innerText + this.innerText;
-    else if (this.id==="eq" || this.id==="C" || this.id==="CE")
+
+    if(this.id === "dot")
+    {
+
+        if(output.innerHTML.includes('.'))
         {
-            
+            alert("Invalid Syntax for number");
+            output.innerHTML = output.innerHTML.substring(0,output.innerHTML.length-1)
         }
-    else{
-                op=this.innerHTML;
-                hist.innerHTML=output.innerHTML;
-                val1=Number(hist.innerHTML);
-                output.innerHTML="";
-            hist.innerText = hist.innerText + this.innerText;
-            }
+            
+    }
+    if(this.className==="number")
+         output.innerText = output.innerText + this.innerText;
+    else if (this.id==="eq" || this.id==="C" || this.id==="CE")
+     {
+            
+     }
+    else
+    {
+        if(output.innerHTML === "")
+            alert("add number then operand");
+        else{
+            op=this.innerHTML;
+            output.innerHTML+=op;
+        }            
+     }
    
 });    
 };
@@ -30,7 +44,7 @@ c.addEventListener("click",function(){
     val1=0;
     val2=0;
     op="";
-    hist.innerHTML="0";
+    hist.innerHTML="";
 });
 
 var ce = document.querySelector("#CE");
@@ -41,31 +55,28 @@ ce.addEventListener("click",function(){
 
 var eq= document.querySelector("#eq");
 eq.addEventListener("click",function(){
-    val2=Number(output.innerHTML);
-    hist.innerText = hist.innerText + String(val2);
-    console.log(op);
-    if(op==="+")
-        output.innerHTML=String(val1+val2);
-    else if(op==="-")
-        output.innerHTML=String(val1-val2);
-    else if(op==="X")
-        output.innerHTML=String(val1*val2);
-    else if(op==="/")
-        output.innerHTML=String(val1/val2);
+    if(output.innerText === "")
+    {
+        hist.innerText = "";
+        output.innerText="";
+        alert("Enter numbers");
+    }
+    else{
+        x = output.innerHTML.length;
+         if(output.innerHTML[x-1] === "+" || output.innerHTML[x-1] === "-" || output.innerHTML[x-1] === "*" || output.innerHTML[x-1] === "/" || output.innerHTML[x-1] === "%")
+         {
+             alert("invalid operation. add operand")
+         }
+         else
+         {
+            hist.innerHTML = output.innerHTML;
+            x = eval(output.innerHTML);
+            output.innerHTML = Math.round(x * 100) / 100;
+         }
+    }
     
 });
-//var input=document.querySelector(".input");
-//input.addEventListener("keypress",function(){
-//var t=event.keyCode;
-//    if(t===13)
-//        {
-//            if(!isNaN(this.value))
-//            output.innerHTML= this.innerHTML + String(this.value)  ;
-//            else
-//                alert("Enter a valid not alphabets");
-//        }
-//    
-//});
+
 var microphone=document.querySelector(".microphone");
 microphone.addEventListener("click",function(){
     var recognition= new(window.SpeechRecognition|| webkitSpeechRecognition);
@@ -110,12 +121,3 @@ microphone.addEventListener("click",function(){
              microphone.classList.remove("record");
     }
 }); 
-//var Isvisible=false;
-//var slidebtn=document.querySelector("#slidebutton");
-//var slider=document.querySelector("#slider");
-//slidebtn.addEventListener("click",function(){
-//    if(Isvisible)
-//    slider.style.visibility=hidden;
-//    else
-//    slider.style.visibility=visible;
-//});
