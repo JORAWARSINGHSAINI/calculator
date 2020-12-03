@@ -1,4 +1,5 @@
 # Web Calculator
+The application is live at: https://jorawarsinghsaini.github.io/calculator/
 ## ui design
 ![](images/1.png)
 
