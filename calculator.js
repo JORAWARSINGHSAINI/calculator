@@ -26,8 +26,9 @@ numb[i].addEventListener("click", function(){
      }
     else
     {
-        if(output.innerHTML === "")
-            alert("add number then operand");
+        var x = output.innerHTML.length
+        if(output.innerHTML === "" || output.innerHTML[x-1] === "+" || output.innerHTML[x-1] === "-"|| output.innerHTML[x-1] === "*"|| output.innerHTML[x-1] === "/" || output.innerHTML[x-1] === "%"  )
+            alert("add number then operand or having multiple operator consecutively");
         else{
             op=this.innerHTML;
             output.innerHTML+=op;
